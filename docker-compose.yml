@@ -1,0 +1,63 @@
+version: '3.9'
+
+services:
+
+  eureka:
+    build:
+      context: ./eureka
+    image: fadi/eureka:1.0
+    container_name: eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - app-network
+
+  gateway:
+    build:
+      context: ./Gateway
+    image: fadi/gateway:1.0
+    container_name: api-gateway
+    ports:
+      - "8089:8089"
+    depends_on:
+      - eureka
+    environment:
+      - SPRING_APPLICATION_NAME=GATEWAY
+      - SERVER_PORT=8089
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SPRING_CLOUD_DISCOVERY_ENABLED=true
+      - SPRING_SERVLET_MULTIPART_MAX-FILE-SIZE=10MB
+      - SPRING_SERVLET_MULTIPART_MAX-REQUEST-SIZE=10MB
+    networks:
+      - app-network
+
+  pimicro:
+    build:
+      context: ./PiMicro
+    image: fadi/pimicro:1.0
+    container_name: pimicro
+    ports:
+      - "8080:8080"
+    depends_on:
+      - eureka
+    environment:
+      - SPRING_APPLICATION_NAME=PIMICRO
+      - SERVER_PORT=8080
+      - SPRING_DATASOURCE_URL=jdbc:h2:file:/app/data/testdb
+      - SPRING_DATASOURCE_USERNAME=fedi
+      - SPRING_DATASOURCE_PASSWORD=12345
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.h2.Driver
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.H2Dialect
+      - SPRING_H2_CONSOLE_ENABLED=true
+      - SPRING_H2_CONSOLE_PATH=/h2
+      - SPRING_H2_CONSOLE_SETTINGS_WEB_ALLOW_OTHERS=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+    volumes:
+      - ./PiMicro/data:/app/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
