@@ -1,0 +1,38 @@
+<h2>Soumettre un stage</h2>
+
+<form (submit)="submitStage($event)">
+  <input type="file" (change)="onFileSelected($event, 'lettre')" required />
+  <input type="file" (change)="onFileSelected($event, 'journal')" required />
+  <input type="file" (change)="onFileSelected($event, 'rapport')" required />
+  <button type="submit">Soumettre</button>
+</form>
+
+<h2>Liste des stages</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Note</th>
+      <th>Valide</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let stage of stages">
+      <td>{{ stage.id }}</td>
+      <td>{{ stage.note || 'N/A' }}</td>
+      <td>
+        <span *ngIf="stage.valide" class="valid-icon">✔️</span>
+        <span *ngIf="!stage.valide" class="invalid-icon">❌</span>
+      </td>
+      <td>
+        <button (click)="download(stage.id, 'lettre')">Lettre</button>
+        <button (click)="download(stage.id, 'journal')">Journal</button>
+        <button (click)="download(stage.id, 'rapport')">Rapport</button>
+        <input type="number" [(ngModel)]="newNote" name="note" />
+        <button (click)="updateNote(stage.id)">Noter</button>
+        <button (click)="deleteStage(stage.id)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
