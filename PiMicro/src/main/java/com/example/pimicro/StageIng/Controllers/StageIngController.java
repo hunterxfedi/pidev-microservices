@@ -20,7 +20,7 @@ public class StageIngController {
     }
 
     // Submit internship documents (without setting note)
-    @PostMapping(value = "/submit", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/submit")
 
 
     public ResponseEntity<?> submitStage(

@@ -58,3 +58,9 @@ Caused by: org.h2.jdbc.JdbcSQLInvalidAuthorizationSpecException: Wrong user name
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:522)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	... 54 more
+2025-06-24 01:32:04.929837Z jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (STAGES: ""VALIDE"" BOOLEAN NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."STAGES"("NOTE","VALIDE","ID","JOURNAL_STAGE","LETTRE_AFFECTATION","RAPPORT_STAGE")VALUES(?,?,?,?,?,?) [22018-232]
+2025-06-24 01:32:04.944966Z jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (STAGES: ""VALIDE"" BOOLEAN NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."STAGES"("NOTE","VALIDE","ID","JOURNAL_STAGE","LETTRE_AFFECTATION","RAPPORT_STAGE")VALUES(?,?,?,?,?,?) [22018-232]
